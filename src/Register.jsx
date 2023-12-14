@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from "./firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 export const Register = (props) => {
-
+    const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [name, setName] = useState('');
@@ -14,6 +15,7 @@ export const Register = (props) => {
           .then((userCredentials) => {
             const user = userCredentials.user.email
             console.log('Successfully registered user:', user)
+            navigate("/")
           })
           .catch(error => console.log(error.message))
     } 
@@ -29,7 +31,7 @@ export const Register = (props) => {
                 <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="Enter your password" id="password" name="password" />
                 <button>Register</button>
             </form>
-            <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account? Log in.</button>
+            <button className="link-btn" onClick={() => navigate('/login')}>Already have an account? Log in.</button>
         </div>
     )
 }
